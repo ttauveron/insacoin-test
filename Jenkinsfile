@@ -2,8 +2,17 @@ pipeline {
   agent any
   stages {
     stage('test') {
-      steps {
-        sh 'hgkdfkfgh'
+      parallel {
+        stage('test') {
+          steps {
+            sh 'hgkdfkfgh'
+          }
+        }
+        stage('pass') {
+          steps {
+            sh 'hostname'
+          }
+        }
       }
     }
     stage('print') {
