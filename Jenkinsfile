@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('test') {
           steps {
-            sh 'ls'
+            sh 'fail'
           }
         }
         stage('pass') {
