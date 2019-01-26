@@ -1,4 +1,4 @@
-FROM debian:9-slim as deps
+FROM debian:9-slim
 
 ENV BERKELEYDB_VERSION=db-4.8.30.NC
 ENV BERKELEYDB_PREFIX=/opt/${BERKELEYDB_VERSION}
@@ -16,9 +16,6 @@ RUN apt update && \
 	ca-certificates \
 	file
 
-
-FROM deps as build-berkeleydb
-
 RUN wget https://download.oracle.com/berkeley-db/${BERKELEYDB_VERSION}.tar.gz && \
 	tar -xzf *.tar.gz && rm *.tar.gz && \
 	mkdir -p ${BERKELEYDB_PREFIX} && \
@@ -26,11 +23,6 @@ RUN wget https://download.oracle.com/berkeley-db/${BERKELEYDB_VERSION}.tar.gz &&
 	make -j 4 && \ 
 	make install && \
 	rm -rf ${BERKELEYDB_PREFIX}/docs 
-
-
-FROM deps as build-insacoin
-
-COPY --from=build-berkeleydb /opt /opt
 
 RUN apt install -y --no-install-recommends \
 	autoconf \
