@@ -22,7 +22,7 @@ make
 # Optional
 su -c 'make install'
 insacoin-qt
-```
+``` 
 You can revert global installation with make uninstall.
 
 Two binaries built with a Debian-like are available here :
