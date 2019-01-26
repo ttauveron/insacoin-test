@@ -1,14 +1,28 @@
 pipeline {
-  agent any
-  stages {
-    stage('test') {
-      steps {
-        sh 'hgkdfkfgh'
+    
+    agent { dockerfile true }
+    
+    stages {
+	stage("Clean workspace and checkout source") {
+	    steps {
+		deleteDir()
+		checkout scm
+	    }
+	}
+	
+	stage('Build insacoin') {
+	    steps {
+		checkout scm
+		sh './autogen.sh'
+		sh './configure LDFLAGS=-L`ls -d /opt/db*`/lib/ CPPFLAGS=-I`ls -d /opt/db*`/include/'
+		sh 'make'
+		// stash includes '**'
       }
     }
-    stage('print') {
+    stage('test') {
       steps {
-        echo 'test'
+		sh 'make check' // || true
+		// junit '**/target/*.xml'
       }
     }
   }
