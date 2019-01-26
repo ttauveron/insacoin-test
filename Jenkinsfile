@@ -1,7 +1,7 @@
 pipeline {
     
     agent { dockerfile true }
-    
+    triggers { pollSCM('H/5 * * * *') }
     stages {
 	stage("Clean workspace and checkout source") {
 	    steps {
