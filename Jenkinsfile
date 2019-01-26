@@ -15,7 +15,7 @@ pipeline {
 		checkout scm
 		sh './autogen.sh'
 		sh './configure LDFLAGS=-L`ls -d /opt/db*`/lib/ CPPFLAGS=-I`ls -d /opt/db*`/include/'
-		sh 'make'
+		sh 'make -j8'
 		// stash includes '**'
       }
     }
